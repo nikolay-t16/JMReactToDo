@@ -54,11 +54,50 @@ class App extends React.Component<AppProps, AppState> {
 					<NewTaskForm/>
 				</header>
 				<section className="main">
-					<TaskList tasks={this.state.tasks}/>
+					<TaskList
+						tasks={this.state.tasks}
+						onRemove={this.onRemove.bind(this)}
+						onStartEditing={this.onStartEditing.bind(this)}
+						onEdit={this.onEdit.bind(this)}
+						onSetComplete={this.onSetComplete.bind(this)}
+					/>
 					<FooterComponent/>
 				</section>
 			</section>
 		);
+	}
+
+	public onRemove(i: number) {
+		if (i > this.state.tasks.length || i < 0) {
+			return;
+		}
+		this.setState((state) => {
+			const newTasks = [...state.tasks];
+			newTasks.splice(i, 1);
+			return {tasks: newTasks};
+		});
+	}
+
+	public onStartEditing(i: number) {
+		this.setState((state) => {
+			state.tasks[i].isInEditMode = true;
+			return {tasks: state.tasks};
+		});
+	}
+
+	public onEdit(i: number, newText: string) {
+		this.setState((state) => {
+			state.tasks[i].isInEditMode = false;
+			state.tasks[i].text = newText;
+			return {tasks: state.tasks};
+		});
+	}
+
+	public onSetComplete(i: number, isCompleted: boolean) {
+		this.setState((state) => {
+			state.tasks[i].isCompleted = isCompleted;
+			return {tasks: state.tasks};
+		});
 	}
 }
 

@@ -12,12 +12,12 @@ function TasksFilter(props: TasksFilterProps) {
 		{label: 'Active', value: FilterTypes.UNCOMPLETED},
 		{label: 'Completed', value: FilterTypes.COMPLETED},
 	];
-	const buttons = buttonsData.map(_ => <li>
+	const buttons = buttonsData.map((e,i) => <li key={i}>
 		<button
-			className={_.value === props.filterValue ? 'selected' : ''}
-			onClick={()=>props.onSetFilter(_.value)}
+			className={e.value === props.filterValue ? 'selected' : ''}
+			onClick={()=>props.onSetFilter(e.value)}
 		>
-			{_.label}
+			{e.label}
 		</button>
 	</li>);
 	return (

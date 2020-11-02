@@ -1,6 +1,6 @@
 import React, {ChangeEvent, FormEvent} from 'react';
 import {TaskData} from "../../../App";
-
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 type TaskComponentProps = {
 	task: TaskData;
 	taskIndex: number;
@@ -60,7 +60,11 @@ class TaskComponent extends React.Component<TaskComponentProps, TaskComponentSta
 					<input className="toggle" checked={this.props.task.isCompleted} onChange={this.onChangeCompleted.bind(this)} type="checkbox"/>
 					<label>
 						<span className="description">{this.props.task.text}</span>
-						<span className="created">created 17 seconds ago</span>
+						<span
+							className="created"
+						>
+							created {formatDistanceToNow(this.props.task.date, {includeSeconds: true})} ago
+						</span>
 					</label>
 					<button className="icon icon-edit" type="button" onClick={() => this.props.onStartEditing(this.props.taskIndex)}/>
 					<button className="icon icon-destroy" type="button" onClick={() => this.props.onRemove(this.props.taskIndex)}/>

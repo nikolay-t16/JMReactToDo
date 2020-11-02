@@ -45,19 +45,19 @@ class App extends React.Component<AppProps, AppState> {
 		    tasks: [
                 {
                     text: 'Completed task',
-                    date: new Date(),
+                    date: new Date(Date.now() - 17 * 1000),
                     isCompleted: true,
                     isInEditMode: false,
                 },
                 {
                     text: 'Editing task',
-                    date: new Date(),
+                    date: new Date(Date.now() - 5 * 60 * 1000),
                     isCompleted: false,
                     isInEditMode: true,
                 },
                 {
                     text: 'Active task',
-                    date: new Date(),
+                    date: new Date(Date.now() - 5 * 60 * 1000),
                     isCompleted: false,
                     isInEditMode: false,
                 },

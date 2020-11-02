@@ -51,7 +51,7 @@ class App extends React.Component<AppProps, AppState> {
 			<section className="todoapp">
 				<header className="header">
 					<h1>todos</h1>
-					<NewTaskForm/>
+					<NewTaskForm onAdd={this.onAdd.bind(this)}/>
 				</header>
 				<section className="main">
 					<TaskList
@@ -65,6 +65,21 @@ class App extends React.Component<AppProps, AppState> {
 				</section>
 			</section>
 		);
+	}
+
+	public onAdd(taskText: string) {
+		this.setState((state) => {
+			const newTasks = [
+				...state.tasks,
+				{
+					text: taskText,
+					date: new Date(),
+					isCompleted: false,
+					isInEditMode: false,
+				}
+			];
+			return {tasks: newTasks};
+		});
 	}
 
 	public onRemove(i: number) {

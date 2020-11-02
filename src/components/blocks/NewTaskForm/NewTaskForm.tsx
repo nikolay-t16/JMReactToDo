@@ -27,6 +27,7 @@ class NewTaskForm extends React.Component<NewTaskFormProps,NewTaskFormState> {
 			return;
 		}
 		this.props.onAdd(this.state.inputText);
+		this.setState({inputText: ''});
 	}
 
 	render() {

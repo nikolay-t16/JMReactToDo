@@ -12,13 +12,32 @@ export type TaskData = {
     isInEditMode: boolean;
 }
 
+export class FilterTypes {
+	public static readonly ALL = 0;
+	public static readonly COMPLETED = 1;
+	public static readonly UNCOMPLETED = -1;
+
+}
+
 type AppState = {
     tasks: TaskData[];
+    filterType: number;
 };
 type AppProps = {};
 
 class App extends React.Component<AppProps, AppState> {
     public state: AppState;
+
+	public get tasksLeft() {
+		return this.state.tasks.reduce((res, e) => e.isCompleted ? res : res + 1, 0);
+	}
+
+	public get filteredTasks() {
+		if(this.state.filterType === FilterTypes.ALL){
+			return this.state.tasks;
+		}
+		return this.state.tasks.filter(_ => _.isCompleted === (this.state.filterType === FilterTypes.COMPLETED));
+	}
 
 	constructor(props: AppProps = {}) {
 		super(props);
@@ -42,7 +61,8 @@ class App extends React.Component<AppProps, AppState> {
                     isCompleted: false,
                     isInEditMode: false,
                 },
-            ]
+            ],
+			filterType: FilterTypes.ALL,
         };
 	}
 
@@ -55,16 +75,29 @@ class App extends React.Component<AppProps, AppState> {
 				</header>
 				<section className="main">
 					<TaskList
-						tasks={this.state.tasks}
+						tasks={this.filteredTasks}
 						onRemove={this.onRemove.bind(this)}
 						onStartEditing={this.onStartEditing.bind(this)}
 						onEdit={this.onEdit.bind(this)}
 						onSetComplete={this.onSetComplete.bind(this)}
 					/>
-					<FooterComponent/>
+					<FooterComponent
+						tasksLeft={this.tasksLeft}
+						filterValue={this.state.filterType}
+						onSetFilter={this.onSetFilter.bind(this)}
+						onRemoveCompleted={this.onRemoveCompleted.bind(this)}
+					/>
 				</section>
 			</section>
 		);
+	}
+
+	public onSetFilter(value: number) {
+		this.setState({filterType: value});
+	}
+
+	public onRemoveCompleted() {
+		this.setState(state => ({tasks: state.tasks.filter(_ => !_.isCompleted)}));
 	}
 
 	public onAdd(taskText: string) {

@@ -1,17 +1,28 @@
 import React from 'react';
+import {FilterTypes} from '../../../App';
 
-function TasksFilter() {
+type TasksFilterProps = {
+	filterValue: number,
+	onSetFilter: (value: number) => void,
+}
+
+function TasksFilter(props: TasksFilterProps) {
+	const buttonsData = [
+		{label: 'All', value: FilterTypes.ALL},
+		{label: 'Active', value: FilterTypes.UNCOMPLETED},
+		{label: 'Completed', value: FilterTypes.COMPLETED},
+	];
+	const buttons = buttonsData.map(_ => <li>
+		<button
+			className={_.value === props.filterValue ? 'selected' : ''}
+			onClick={()=>props.onSetFilter(_.value)}
+		>
+			{_.label}
+		</button>
+	</li>);
 	return (
 		<ul className="filters">
-			<li>
-				<button className="selected">All</button>
-			</li>
-			<li>
-				<button>Active</button>
-			</li>
-			<li>
-				<button>Completed</button>
-			</li>
+			{buttons}
 		</ul>
 	);
 }

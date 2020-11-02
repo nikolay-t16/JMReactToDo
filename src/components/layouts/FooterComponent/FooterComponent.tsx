@@ -1,12 +1,22 @@
 import React from 'react';
 import TasksFilter from '../../blocks/TasksFilter/TasksFilter'
 
-function FooterComponent() {
+type FooterComponentProps = {
+	tasksLeft: number,
+	filterValue: number,
+	onSetFilter: (value: number) => void,
+	onRemoveCompleted: () => void,
+}
+
+function FooterComponent(props: FooterComponentProps) {
 	return (
 		<footer className="footer">
-			<span className="todo-count">1 items left</span>
-			<TasksFilter/>
-			<button className="clear-completed">Clear completed</button>
+			<span className="todo-count">{props.tasksLeft} items left</span>
+			<TasksFilter
+				filterValue={props.filterValue}
+				onSetFilter={props.onSetFilter}
+			/>
+			<button onClick={props.onRemoveCompleted} className="clear-completed">Clear completed</button>
 		</footer>
 	);
 }

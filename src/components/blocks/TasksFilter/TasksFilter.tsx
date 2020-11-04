@@ -12,12 +12,15 @@ function TasksFilter(props: TasksFilterProps) {
 		{label: 'Active', value: FilterTypes.UNCOMPLETED},
 		{label: 'Completed', value: FilterTypes.COMPLETED},
 	];
-	const buttons = buttonsData.map((e,i) => <li key={i}>
+
+	// eslint-disable-next-line react/no-array-index-key
+	const buttons = buttonsData.map((event,i) => <li key={i}>
 		<button
-			className={e.value === props.filterValue ? 'selected' : ''}
-			onClick={()=>props.onSetFilter(e.value)}
+			type="button"
+			className={event.value === props.filterValue ? 'selected' : ''}
+			onClick={()=>props.onSetFilter(event.value)}
 		>
-			{e.label}
+			{event.label}
 		</button>
 	</li>);
 	return (

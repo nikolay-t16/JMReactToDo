@@ -8,34 +8,40 @@ type NewTaskFormState = {
 	inputText: string
 };
 
-class NewTaskForm extends React.Component<NewTaskFormProps,NewTaskFormState> {
+// class NewTaskForm extends React.Component<NewTaskFormProps,NewTaskFormState> {
+//	public state: NewTaskFormState;
+class NewTaskForm extends React.Component<NewTaskFormProps, NewTaskFormState> {
 	public state: NewTaskFormState;
-	constructor(props: NewTaskFormProps){
+
+	public constructor(props: NewTaskFormProps) {
 		super(props);
 		this.state = {
 			inputText: '',
 		}
 	}
 
-	protected onChange(e: ChangeEvent<HTMLInputElement>) {
+	public onChange(e: ChangeEvent<HTMLInputElement>) {
 		this.setState({inputText: e.target.value});
 	};
 
-	protected onSubmit(e: FormEvent<HTMLFormElement>) {
-		e.preventDefault();
-		if (this.state.inputText.trim() === '') {
+	public onSubmit(event: FormEvent<HTMLFormElement>) {
+		event.preventDefault();
+		const {inputText} = this.state;
+		const {onAdd} = this.props;
+		if (inputText.trim() === '') {
 			return;
 		}
-		this.props.onAdd(this.state.inputText);
+		onAdd(inputText);
 		this.setState({inputText: ''});
 	}
 
-	render() {
+	public render() {
+		const {inputText} = this.state;
 		return (
 			<form onSubmit={this.onSubmit.bind(this)}>
 				<input
 					className="new-todo"
-					value={this.state.inputText}
+					value={inputText}
 					onChange={this.onChange.bind(this)}
 					placeholder="What needs to be done?"
 					autoFocus

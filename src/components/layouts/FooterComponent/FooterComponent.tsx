@@ -8,15 +8,15 @@ type FooterComponentProps = {
 	onRemoveCompleted: () => void,
 }
 
-function FooterComponent(props: FooterComponentProps) {
+function FooterComponent({tasksLeft, filterValue, onSetFilter, onRemoveCompleted}: FooterComponentProps) {
 	return (
 		<footer className="footer">
-			<span className="todo-count">{props.tasksLeft} items left</span>
+			<span className="todo-count">{tasksLeft} items left</span>
 			<TasksFilter
-				filterValue={props.filterValue}
-				onSetFilter={props.onSetFilter}
+				filterValue={filterValue}
+				onSetFilter={onSetFilter}
 			/>
-			<button onClick={props.onRemoveCompleted} className="clear-completed">Clear completed</button>
+			<button type="button" onClick={onRemoveCompleted} className="clear-completed">Clear completed</button>
 		</footer>
 	);
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FilterTypes } from '../../../App';
+import FilterTypes from '../../../types/FilterTypes';
 
 type TasksFilterProps = {
   filterValue: number;
@@ -13,8 +13,9 @@ function TasksFilter(props: TasksFilterProps) {
     { label: 'Completed', value: FilterTypes.COMPLETED },
   ];
 
-  // eslint-disable-next-line react/no-array-index-key
+
   const buttons = buttonsData.map((event, i) => (
+    // eslint-disable-next-line react/no-array-index-key
     <li key={i}>
       <button
         type="button"

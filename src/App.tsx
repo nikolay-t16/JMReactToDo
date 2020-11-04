@@ -1,22 +1,13 @@
 import React from 'react';
 import './App.css';
+
 import FooterComponent from './components/layouts/FooterComponent/FooterComponent';
 import TaskList from './components/layouts/TaskList/TaskList';
 
 import NewTaskForm from './components/blocks/NewTaskForm/NewTaskForm';
+import TaskData from './types/TaskData';
+import FilterTypes from './types/FilterTypes';
 
-export type TaskData = {
-  text: string;
-  date: Date;
-  isCompleted: boolean;
-  isInEditMode: boolean;
-};
-
-export enum FilterTypes {
-  ALL = 0,
-  COMPLETED = 1,
-  UNCOMPLETED = 2,
-}
 
 type AppState = {
   tasks: TaskData[];

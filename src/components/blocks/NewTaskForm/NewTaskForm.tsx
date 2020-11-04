@@ -8,8 +8,6 @@ type NewTaskFormState = {
   inputText: string;
 };
 
-// class NewTaskForm extends React.Component<NewTaskFormProps,NewTaskFormState> {
-//	public state: NewTaskFormState;
 class NewTaskForm extends React.Component<NewTaskFormProps, NewTaskFormState> {
   public state: NewTaskFormState;
 
@@ -20,8 +18,8 @@ class NewTaskForm extends React.Component<NewTaskFormProps, NewTaskFormState> {
     };
   }
 
-  public onChange(e: ChangeEvent<HTMLInputElement>) {
-    this.setState({ inputText: e.target.value });
+  public onChange(event: ChangeEvent<HTMLInputElement>) {
+    this.setState({ inputText: event.target.value });
   }
 
   public onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -44,7 +42,6 @@ class NewTaskForm extends React.Component<NewTaskFormProps, NewTaskFormState> {
           value={inputText}
           onChange={this.onChange.bind(this)}
           placeholder="What needs to be done?"
-          autoFocus
         />
       </form>
     );

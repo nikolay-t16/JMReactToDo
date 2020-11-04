@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent } from 'react';
 
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
-import { TaskData } from '../../../App';
+import TaskData from '../../../types/TaskData';
 
 type TaskComponentProps = {
   task: TaskData;
@@ -26,8 +26,8 @@ class TaskComponent extends React.Component<TaskComponentProps, TaskComponentSta
     };
   }
 
-  protected onSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  protected onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     const { inputText } = this.state;
     const { taskIndex, onEdit } = this.props;
     if (inputText.trim() === '') {

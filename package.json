@@ -33,8 +33,20 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint ./src",
-    "lint:fix": "eslint ./src --fix",
+    "lint:fix": "eslint ./src --fix --color",
     "format": "prettier --write src/"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx,json,css}": [
+      "eslint --fix src/",
+      "prettier --write",
+      "git add"
+    ]
   },
   "eslintConfig": {
     "extends": [

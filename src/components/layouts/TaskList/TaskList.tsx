@@ -2,7 +2,6 @@ import React from 'react';
 import TaskComponent from '../../blocks/TaskComponent/TaskComponent';
 import TaskData from '../../../types/TaskData';
 
-
 type TaskListProps = {
   tasks: TaskData[];
   onRemove: (i: number) => void;
@@ -12,7 +11,6 @@ type TaskListProps = {
 };
 
 function TaskList({ tasks, onRemove, onStartEditing, onEdit, onSetComplete }: TaskListProps) {
-
   const tasksNodes = tasks.map((task, i) => (
     <TaskComponent
       // eslint-disable-next-line react/no-array-index-key

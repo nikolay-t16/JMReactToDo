@@ -8,7 +8,6 @@ import NewTaskForm from './components/blocks/NewTaskForm/NewTaskForm';
 import TaskData from './types/TaskData';
 import FilterTypes from './types/FilterTypes';
 
-
 type AppState = {
   tasks: TaskData[];
   filterType: number;

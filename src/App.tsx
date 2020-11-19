@@ -15,37 +15,32 @@ type AppState = {
 type AppProps = {};
 
 class App extends React.Component<AppProps, AppState> {
-  public state: AppState;
-
-  constructor(props: AppProps = {}) {
-    super(props);
-    this.state = {
-      tasks: [
-        {
-          text: 'fw',
-          date: new Date(Date.now() - 17 * 1000),
-          isCompleted: true,
-          isInEditMode: false,
-          spentTime: 0,
-        },
-        {
-          text: '',
-          date: new Date(Date.now() - 5 * 60 * 1000),
-          isCompleted: false,
-          isInEditMode: true,
-          spentTime: 0,
-        },
-        {
-          text: 'fw',
-          date: new Date(Date.now() - 5 * 60 * 1000),
-          isCompleted: false,
-          isInEditMode: false,
-          spentTime: 0,
-        },
-      ],
-      filterType: FilterTypes.ALL,
-    };
-  }
+  public state: AppState = {
+    tasks: [
+      {
+        text: 'fw',
+        date: new Date(Date.now() - 17 * 1000),
+        isCompleted: true,
+        isInEditMode: false,
+        spentTime: 0,
+      },
+      {
+        text: '',
+        date: new Date(Date.now() - 5 * 60 * 1000),
+        isCompleted: false,
+        isInEditMode: true,
+        spentTime: 0,
+      },
+      {
+        text: 'fw',
+        date: new Date(Date.now() - 5 * 60 * 1000),
+        isCompleted: false,
+        isInEditMode: false,
+        spentTime: 0,
+      },
+    ],
+    filterType: FilterTypes.ALL,
+  };
 
   public onSetFilter(value: number) {
     this.setState({ filterType: value });

@@ -25,6 +25,12 @@ class TaskTimer extends React.Component<TaskTimerProps, TaskTimerState> {
     };
   }
 
+  public componentWillUnmount() {
+    if (this.interval) {
+      clearTimeout(this.interval);
+    }
+  }
+
   protected onStart() {
     this.setState({ isActive: true });
     if (!this.interval) {

@@ -22,22 +22,25 @@ class App extends React.Component<AppProps, AppState> {
     this.state = {
       tasks: [
         {
-          text: 'Completed task',
+          text: 'fw',
           date: new Date(Date.now() - 17 * 1000),
           isCompleted: true,
           isInEditMode: false,
+          spentTime: 0,
         },
         {
-          text: 'Editing task',
+          text: '',
           date: new Date(Date.now() - 5 * 60 * 1000),
           isCompleted: false,
           isInEditMode: true,
+          spentTime: 0,
         },
         {
-          text: 'Active task',
+          text: 'fw',
           date: new Date(Date.now() - 5 * 60 * 1000),
           isCompleted: false,
           isInEditMode: false,
+          spentTime: 0,
         },
       ],
       filterType: FilterTypes.ALL,
@@ -61,6 +64,7 @@ class App extends React.Component<AppProps, AppState> {
           date: new Date(),
           isCompleted: false,
           isInEditMode: false,
+          spentTime: 0,
         },
       ];
       return { tasks: newTasks };
@@ -104,6 +108,14 @@ class App extends React.Component<AppProps, AppState> {
     });
   }
 
+  public onChangeTimer(i: number, value: number) {
+    this.setState(({ tasks: oldTasks }) => {
+      const tasks = [...oldTasks];
+      tasks[i].spentTime = value;
+      return { tasks };
+    });
+  }
+
   public get tasksLeft() {
     const { tasks } = this.state;
     return tasks.reduce((res, task) => (task.isCompleted ? res : res + 1), 0);
@@ -132,6 +144,7 @@ class App extends React.Component<AppProps, AppState> {
             onStartEditing={(i) => this.onStartEditing(i)}
             onEdit={(i, newText) => this.onEdit(i, newText)}
             onSetComplete={(i, isCompleted) => this.onSetComplete(i, isCompleted)}
+            onChangeTimer={(i, value) => this.onChangeTimer(i, value)}
           />
           <FooterComponent
             tasksLeft={this.tasksLeft}

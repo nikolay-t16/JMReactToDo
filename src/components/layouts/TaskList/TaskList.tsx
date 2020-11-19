@@ -8,9 +8,10 @@ type TaskListProps = {
   onStartEditing: (i: number) => void;
   onEdit: (i: number, newText: string) => void;
   onSetComplete: (i: number, isCompleted: boolean) => void;
+  onChangeTimer: (i: number, value: number) => void;
 };
 
-function TaskList({ tasks, onRemove, onStartEditing, onEdit, onSetComplete }: TaskListProps) {
+function TaskList({ tasks, onRemove, onStartEditing, onEdit, onSetComplete, onChangeTimer }: TaskListProps) {
   const tasksNodes = tasks.map((task, i) => (
     <TaskComponent
       // eslint-disable-next-line react/no-array-index-key
@@ -21,6 +22,7 @@ function TaskList({ tasks, onRemove, onStartEditing, onEdit, onSetComplete }: Ta
       onStartEditing={onStartEditing}
       onEdit={onEdit}
       onSetComplete={onSetComplete}
+      onChangeTimer={onChangeTimer}
     />
   ));
 

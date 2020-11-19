@@ -2,6 +2,7 @@ import React, { ChangeEvent, FormEvent } from 'react';
 
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import TaskData from '../../../types/TaskData';
+import TaskTimer from '../TaskTimer/TaskTimer';
 
 type TaskComponentProps = {
   task: TaskData;
@@ -10,6 +11,7 @@ type TaskComponentProps = {
   onStartEditing: (i: number) => void;
   onEdit: (i: number, newText: string) => void;
   onSetComplete: (i: number, isCompleted: boolean) => void;
+  onChangeTimer: (i: number, value: number) => void;
 };
 
 type TaskComponentState = {
@@ -45,6 +47,11 @@ class TaskComponent extends React.Component<TaskComponentProps, TaskComponentSta
     onSetComplete(taskIndex, !task.isCompleted);
   }
 
+  protected onChangeTimer(value: number) {
+    const { taskIndex, onChangeTimer } = this.props;
+    onChangeTimer(taskIndex, value);
+  }
+
   protected get className() {
     const { task } = this.props;
     if (task.isInEditMode) {
@@ -74,8 +81,12 @@ class TaskComponent extends React.Component<TaskComponentProps, TaskComponentSta
             type="checkbox"
           />
           <label>
-            <span className="description">{task.text}</span>
-            <span className="created">created {formatDistanceToNow(task.date, { includeSeconds: true })} ago</span>
+            <span className="title">{task.text}</span>
+            <span className="description">
+              {/* eslint-disable-next-line no-console */}
+              <TaskTimer timerValue={task.spentTime} onChangeTimer={(val) => this.onChangeTimer(val)} />
+            </span>
+            <span className="description">created {formatDistanceToNow(task.date, { includeSeconds: true })} ago</span>
           </label>
           {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
           <button className="icon icon-edit" type="button" onClick={() => onStartEditing(taskIndex)} />

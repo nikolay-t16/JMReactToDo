@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import TaskData from '../../../types/TaskData';
@@ -14,46 +14,26 @@ type TaskComponentProps = {
   onChangeTimer: (i: number, value: number) => void;
 };
 
-type TaskComponentState = {
-  inputText: string;
-};
+function TaskComponent(props: TaskComponentProps) {
+  const { task, taskIndex, onRemove, onStartEditing, onEdit, onSetComplete, onChangeTimer } = props;
 
-class TaskComponent extends React.Component<TaskComponentProps, TaskComponentState> {
-  public state: TaskComponentState;
+  const [inputText, setInputText] = useState('');
 
-  constructor(props: TaskComponentProps) {
-    super(props);
-    this.state = {
-      inputText: props.task.text,
-    };
-  }
-
-  protected onSubmit(event: FormEvent<HTMLFormElement>) {
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const { inputText } = this.state;
-    const { taskIndex, onEdit } = this.props;
     if (inputText.trim() === '') {
       return;
     }
     onEdit(taskIndex, inputText);
-  }
+  };
 
-  protected onChange(event: ChangeEvent<HTMLInputElement>) {
-    this.setState({ inputText: event.target.value });
-  }
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => setInputText(event.target.value);
 
-  protected onChangeCompleted() {
-    const { taskIndex, onSetComplete, task } = this.props;
-    onSetComplete(taskIndex, !task.isCompleted);
-  }
+  const onChangeCompleted = () => onSetComplete(taskIndex, !task.isCompleted);
 
-  protected onChangeTimer(value: number) {
-    const { taskIndex, onChangeTimer } = this.props;
-    onChangeTimer(taskIndex, value);
-  }
+  const onChangeTimerHandler = (value: number) => onChangeTimer(taskIndex, value);
 
-  protected get className() {
-    const { task } = this.props;
+  const makeClassName = () => {
     if (task.isInEditMode) {
       return 'editing';
     }
@@ -61,42 +41,35 @@ class TaskComponent extends React.Component<TaskComponentProps, TaskComponentSta
       return 'completed';
     }
     return '';
-  }
+  };
 
-  public render() {
-    const { inputText } = this.state;
-    const { task, taskIndex, onStartEditing, onRemove } = this.props;
-    const editInput = (
-      <form onSubmit={this.onSubmit.bind(this)}>
-        <input type="text" className="edit" value={inputText} onChange={this.onChange.bind(this)} />
-      </form>
-    );
-    return (
-      <li className={this.className}>
-        <div className="view">
-          <input
-            className="toggle"
-            checked={task.isCompleted}
-            onChange={this.onChangeCompleted.bind(this)}
-            type="checkbox"
-          />
-          <label>
-            <span className="title">{task.text}</span>
-            <span className="description">
-              {/* eslint-disable-next-line no-console */}
-              <TaskTimer timerValue={task.spentTime} onChangeTimer={(val) => this.onChangeTimer(val)} />
-            </span>
-            <span className="description">created {formatDistanceToNow(task.date, { includeSeconds: true })} ago</span>
-          </label>
-          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-          <button className="icon icon-edit" type="button" onClick={() => onStartEditing(taskIndex)} />
-          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-          <button className="icon icon-destroy" type="button" onClick={() => onRemove(taskIndex)} />
-        </div>
-        {task.isInEditMode ? editInput : ''}
-      </li>
-    );
-  }
+  const className = makeClassName();
+
+  const editInput = (
+    <form onSubmit={onSubmit}>
+      <input type="text" className="edit" value={inputText} onChange={onChange} />
+    </form>
+  );
+  return (
+    <li className={className}>
+      <div className="view">
+        <input className="toggle" checked={task.isCompleted} onChange={onChangeCompleted} type="checkbox" />
+        <label>
+          <span className="title">{task.text}</span>
+          <span className="description">
+            {/* eslint-disable-next-line no-console */}
+            <TaskTimer timerValue={task.spentTime} onChangeTimer={(val) => onChangeTimerHandler(val)} />
+          </span>
+          <span className="description">created {formatDistanceToNow(task.date, { includeSeconds: true })} ago</span>
+        </label>
+        {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+        <button className="icon icon-edit" type="button" onClick={() => onStartEditing(taskIndex)} />
+        {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+        <button className="icon icon-destroy" type="button" onClick={() => onRemove(taskIndex)} />
+      </div>
+      {task.isInEditMode ? editInput : ''}
+    </li>
+  );
 }
 
 export default TaskComponent;
